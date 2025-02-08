@@ -6,11 +6,11 @@ pygame.init()
 
 
 # Screen resolution
-res = (750, 450)
+res = (1500, 900)
 screen = pygame.display.set_mode(res)
 
 # Load and scale the image
-imp = pygame.image.load(r"C:\Users\Conor\Desktop\Hackathon25\Flag-map_of_the_People's_Republic_of_China.svg.png").convert_alpha()
+imp = pygame.image.load(r"Flag-map_of_the_People's_Republic_of_China.svg.png").convert_alpha()
 imp = pygame.transform.scale(imp, (200, 200))
 
 # Clock for frame rate control
