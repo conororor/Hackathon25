@@ -5,9 +5,7 @@ import math
 pygame.init()
 
 def wrap_text(text, font, max_width):
-    """
-    Wraps the text to fit within the specified width.
-    """
+
     words = text.split(" ")
     lines = []
     current_line = ""
@@ -51,7 +49,7 @@ def upgradeScreen(country_Multiplier):
     bigOption = "Plant 5 trees" #placeholder
 
     # Player stats
-    player_money = 1000.00
+    money = 1000.00
     small_upgrade_cost = 10.00
     big_upgrade_cost = 30.00
 
@@ -79,7 +77,7 @@ def upgradeScreen(country_Multiplier):
             screen.blit(text_surface, (back_button.centerx - text_surface.get_width() // 2, back_button.centery - len(back_lines) * text_surface.get_height() // 2 + i * text_surface.get_height()))
         
         # Draw player money at the top center
-        money_lines = wrap_text(f"Money: ${player_money:.2f}", large_font, WIDTH - 20)
+        money_lines = wrap_text(f"Money: ${money:.2f}", large_font, WIDTH - 20)
         for i, line in enumerate(money_lines):
             text_surface = large_font.render(line, True, BLACK)
             screen.blit(text_surface, (WIDTH - text_surface.get_width() - 20, 30 + i * text_surface.get_height()))  # Adjusted position
@@ -92,7 +90,7 @@ def upgradeScreen(country_Multiplier):
             screen.blit(text_surface, (WIDTH // 2 - text_surface.get_width() // 2, 60 + i * text_surface.get_height()))  
         
         # Draw small upgrade button with solution
-        small_button_color = LIGHT_GREEN if small_upgrade_button.collidepoint(mouse_pos) else (GREEN if player_money >= small_upgrade_cost else DARK_GREEN)
+        small_button_color = LIGHT_GREEN if small_upgrade_button.collidepoint(mouse_pos) else (GREEN if money >= small_upgrade_cost else DARK_GREEN)
         pygame.draw.rect(screen, small_button_color, small_upgrade_button)
         small_upgrade_lines = wrap_text(f"$ {small_upgrade_cost:.2f}", font, small_upgrade_button.width)
         for i, line in enumerate(small_upgrade_lines):
@@ -105,7 +103,7 @@ def upgradeScreen(country_Multiplier):
             screen.blit(text_surface, (small_upgrade_button.centerx - text_surface.get_width() // 2, small_upgrade_button.bottom - (small_upgrade_button.height // 4) - len(small_option_lines) * text_surface.get_height() // 2 + i * text_surface.get_height()))
         
         # Draw big upgrade button with solution
-        big_button_color = LIGHT_RED if big_upgrade_button.collidepoint(mouse_pos) else (RED if player_money >= big_upgrade_cost else DARK_RED)
+        big_button_color = LIGHT_RED if big_upgrade_button.collidepoint(mouse_pos) else (RED if money >= big_upgrade_cost else DARK_RED)
         pygame.draw.rect(screen, big_button_color, big_upgrade_button)
         big_upgrade_lines = wrap_text(f"$ {big_upgrade_cost:.2f}", font, big_upgrade_button.width)
         for i, line in enumerate(big_upgrade_lines):
@@ -131,11 +129,11 @@ def upgradeScreen(country_Multiplier):
                 
                 if back_button.collidepoint(mouse_pos):
                     running = False  # Simulates going back
-                elif small_upgrade_button.collidepoint(mouse_pos) and player_money >= small_upgrade_cost:
-                    player_money = round(player_money - small_upgrade_cost, 2)
+                elif small_upgrade_button.collidepoint(mouse_pos) and money >= small_upgrade_cost:
+                    money = round(money - small_upgrade_cost, 2)
                     small_upgrade_cost = round(small_upgrade_cost * country_Multiplier, 2) # Increase cost
-                elif big_upgrade_button.collidepoint(mouse_pos) and player_money >= big_upgrade_cost:
-                    player_money = round(player_money - big_upgrade_cost, 2)
+                elif big_upgrade_button.collidepoint(mouse_pos) and money >= big_upgrade_cost:
+                    money = round(money - big_upgrade_cost, 2)
                     big_upgrade_cost = round(big_upgrade_cost * country_Multiplier, 2)  # Increase cost more drastically
         
         pygame.display.flip()
