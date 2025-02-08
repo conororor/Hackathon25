@@ -2,7 +2,7 @@ from pymongo import MongoClient
 import random
 
 
-MONGO_URI = "your_connection_string"
+MONGO_URI = "mongodb+srv://leonie:<db_password>@database.prqcd.mongodb.net/?retryWrites=true&w=majority&appName=Database"
 
 client = MongoClient(MONGO_URI)
 db = client["data"]
