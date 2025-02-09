@@ -48,6 +48,13 @@ def StartMenu():
                     pygame.quit()
                     sys.exit()
         pygame.display.update()
+
+
+def wrap_text(text, font, max_width):
+    words = text.split("")
+    lines = []
+    current_lines =""
+    
 def HelpMenu():
     while True:
         screen.fill((211, 211, 211))  # Light grey background
@@ -56,11 +63,27 @@ def HelpMenu():
         title_text = font.render("Help Menu", True, (0, 0, 0))  # Black text
         screen.blit(title_text, (500, 100))
         # Customizable Instructions Text
-        instructions_text = font.render("Extend your green energy plants by upgrading unrenwable-engery resourses", True, (0, 0, 0))
-        instructions_text2 = font.render("Your ultimate goal is to reduce global CO₂ emissions and reach net-zero", True, (0, 0, 0))
+        instructions_text = wrap_text(f"Help Menu
+Welcome to Luca
+This guide will help you understand how to play and navigate the game.
+
+How to Play
+Objective: Your goal is to acquire countries and implement policies that reduce global CO₂ emissions, leading the world toward net-zero emissions.
+Acquiring Countries: Use your resources to purchase control over countries, allowing you to influence their energy policies and environmental actions.
+Making Decisions: Each country presents different energy sources, economic factors, and environmental challenges. Choose wisely to balance emissions reduction with economic stability.
+Implementing Policies:
+Invest in Renewable Energy – Build wind, solar, and hydroelectric plants to replace fossil fuels.
+Impose Carbon Taxes – Penalize industries with high emissions to encourage sustainability.
+Support Reforestation – Expand forests to absorb CO₂ and enhance biodiversity.
+Research Green Technology – Unlock advanced solutions for cleaner energy.
+Game Features
+Real-World Data: The game simulates actual country emissions and environmental policies.
+Dynamic CO₂ Levels: Your choices directly impact the world’s CO₂ levels and climate future.
+Strategic Decision-Making: Balance economy, policy, and public support to succeed.
+Controls
+Mouse Click: Select countries, upgrade resources, and confirm policy choices.")
         # Render instructions
         screen.blit(instructions_text, (200, 200))
-        screen.blit(instructions_text2, (200, 250))
         # Back Button
         back_button = pygame.Rect(10, 10, 150, 50)  # Back button rectangle at the top-left corner
         pygame.draw.rect(screen, (0, 255, 0), back_button)  # Green button
