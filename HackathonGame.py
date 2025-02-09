@@ -6,6 +6,83 @@ from upgrades import upgradeScreen
 # Initialize Pygame
 pygame.init()
 
+res = (1200, 750)
+screen = pygame.display.set_mode(res)
+pygame.display.set_caption("Game Menu")
+menu_image = pygame.image.load("images/MainMenuImage.png").convert()
+menu_image = pygame.transform.scale(menu_image, res)
+GameStart = pygame.image.load("images/GameStartHover.png").convert_alpha()
+Help = pygame.image.load("images/HelpHover.png").convert_alpha()
+Quit = pygame.image.load("images/QuitHover.png").convert_alpha()
+# Create button rectangles
+start_button = GameStart.get_rect(center=(600, 330))  # Centered at (600, 300)
+help_button = Help.get_rect(center=(600, 500))  # Below start
+quit_button = Quit.get_rect(center=(600, 660))  # Below help
+def StartMenu():
+    while True:
+        screen.blit(menu_image, (0, 0))
+        mouse_pos = pygame.mouse.get_pos()
+        # Check if mouse is hovering over buttons
+        start_hover = start_button.collidepoint(mouse_pos)
+        help_hover = help_button.collidepoint(mouse_pos)
+        quit_hover = quit_button.collidepoint(mouse_pos)
+        # Draw buttons only if hovering
+        if start_hover:
+            screen.blit(GameStart, start_button.topleft)
+        if help_hover:
+            screen.blit(Help, help_button.topleft)
+        if quit_hover:
+            screen.blit(Quit, quit_button.topleft)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if start_hover:
+                    print("Start Game")  # Replace with your game function
+                    return
+                if help_hover:
+                    print("Help Menu")  # Replace with a help screen function
+                    HelpMenu()
+                if quit_hover:
+                    pygame.quit()
+                    sys.exit()
+        pygame.display.update()
+def HelpMenu():
+    while True:
+        screen.fill((211, 211, 211))  # Light grey background
+        font = pygame.font.Font(None, 36)
+        # Title Text
+        title_text = font.render("Help Menu", True, (0, 0, 0))  # Black text
+        screen.blit(title_text, (500, 100))
+        # Customizable Instructions Text
+        instructions_text = font.render("In this simulation/game you are tasked with expanding your Renewable energy plants ", True, (0, 0, 0))  # Black text
+        instructions_text2 = font.render("across the world.", True, (0, 0, 0))
+        instructions_text3 = font.render("", True, (0, 0, 0))
+        # Render instructions
+        screen.blit(instructions_text, (200, 200))
+        screen.blit(instructions_text2, (200, 250))
+        screen.blit(instructions_text3, (200, 300))
+        # Back Button
+        back_button = pygame.Rect(10, 10, 150, 50)  # Back button rectangle at the top-left corner
+        pygame.draw.rect(screen, (0, 255, 0), back_button)  # Green button
+        back_text = font.render("Back", True, (0, 0, 0))  # Black text
+        screen.blit(back_text, (40, 20))  # Positioning the text on the button
+        mouse_pos = pygame.mouse.get_pos()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if back_button.collidepoint(mouse_pos):
+                    return  # Return to the main menu
+        pygame.display.update()
+# Start the menu
+StartMenu()
+
+
+
+
 class Country:
     def __init__(self, url, scale, pos, badInc, goodInc, cost):
         self.url = url
@@ -35,8 +112,7 @@ class Country:
             del pixel_array  # Release pixel array lock
 
 # Screen resolution
-res = (1200, 750)
-screen = pygame.display.set_mode(res)
+
 
 badPol = 0
 worldPol = 0
@@ -158,7 +234,7 @@ while True:
                         screen = pygame.display.set_mode(res)
         
     screen.fill("lightblue")
-    background.set_alpha()
+    background.set_alpha(150)
     screen.blit(background, (0, 0))
     
     for country in countries:
