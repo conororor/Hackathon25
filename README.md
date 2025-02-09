@@ -15,51 +15,17 @@ The game simulates the effects of these decisions on global emissions, with the 
 Requirements
 Ensure you have the following installed:
 
-Node.js & npm (for frontend)
-Python (for backend)
+Python (for backend/frontend)
 MongoDB (database)
 Installation & Setup
 Clone the repository
 
-git clone https://github.com/yourusername/luca-climate-game.git
-cd luca-climate-game
-Backend Setup
+git clone https://github.com/conororor/Hackathon25.git
 
-Navigate to the backend folder:
-
-cd backend
-Install dependencies:
-```
-pip install -r requirements.txt
-```
-Start the backend server:
-```
-python app.py
-```
-Frontend Setup
-
-Navigate to the frontend folder:
-```
-cd frontend
-```
-Install dependencies:
-```
-npm install
-```
-Run the frontend:
-```
-npm start
-```
-Database Setup
+run HackathonGame.py
 
 Ensure MongoDB is running locally or update the connection string in config.py.
 Use MongoDB Atlas if hosting the database remotely.
-Running the Game
-Once the backend and frontend servers are running, open your browser and navigate to:
-
-
-http://localhost:3000
-From here, you can start acquiring countries and implementing climate policies!
 
 ## 🔮 Future Plans
 Multiplayer Mode: Compete or collaborate with other players to fight climate change.
