@@ -1,13 +1,16 @@
-from pymongo import MongoClient
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 import random
+uri = "mongodb+srv://leonie:<jNpBNJgyjJR6edW9>@database.prqcd.mongodb.net/?retryWrites=true&w=majority&appName=Database"
 
-
-MONGO_URI = "mongodb+srv://leonie:<db_password>@database.prqcd.mongodb.net/?retryWrites=true&w=majority&appName=Database"
-
-client = MongoClient(MONGO_URI)
-db = client["data"]
+client = MongoClient(uri, server_api=ServerApi('1'), serverSelectionTimeoutMS=5000000)
+db = client["countries"]
 collection = db["regions"]
-
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
 
 regions = [
     "Alaska", "North West Territory", "Alberta", "Ontario", "Quebec",
@@ -41,6 +44,8 @@ gdp_multipliers = {
     "Afghanistan": "low", "Mongolia": "low", "Japan": "high", "Indonesia": "medium", "New Guinea": "low",
     "Western Australia": "medium", "Eastern Australia": "medium"
 }
+
+
 
 def assign_multiplier(rating):
     """Assigns a random CO₂ multiplier based on GDP impact ('high', 'medium', 'low')."""
