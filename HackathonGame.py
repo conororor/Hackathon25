@@ -56,13 +56,11 @@ def HelpMenu():
         title_text = font.render("Help Menu", True, (0, 0, 0))  # Black text
         screen.blit(title_text, (500, 100))
         # Customizable Instructions Text
-        instructions_text = font.render("In this simulation/game you are tasked with expanding your Renewable energy plants ", True, (0, 0, 0))  # Black text
-        instructions_text2 = font.render("across the world.", True, (0, 0, 0))
-        instructions_text3 = font.render("", True, (0, 0, 0))
+        instructions_text = font.render("Extend your green energy plants by upgrading unrenwable-engery resourses", True, (0, 0, 0))
+        instructions_text2 = font.render("Your ultimate goal is to reduce global CO₂ emissions and reach net-zero", True, (0, 0, 0))
         # Render instructions
         screen.blit(instructions_text, (200, 200))
         screen.blit(instructions_text2, (200, 250))
-        screen.blit(instructions_text3, (200, 300))
         # Back Button
         back_button = pygame.Rect(10, 10, 150, 50)  # Back button rectangle at the top-left corner
         pygame.draw.rect(screen, (0, 255, 0), back_button)  # Green button
@@ -238,7 +236,7 @@ while True:
     screen.blit(background, (0, 0))
     
     for country in countries:
-        money += country.goodInc*0.01
+        money += country.goodInc*0.05
         badPol += country.badInc
         goodPol += country.goodInc
         country.adjust_green_intensity()
@@ -248,16 +246,16 @@ while True:
         if mouse_hover[country]:
             if country.goodInc > 0:  # Avoid division by zero
                 ratio = (country.badInc / country.goodInc) * 100
-                hover_text = font.render(f"Good Polution: {country.goodInc*100}", True, "white")
-                hover_text2 = font.render(f"Bad Pollution {country.badInc*100}", True, "white")
+                hover_text = font.render(f"Countries Green Energy: {country.goodInc*100}", True, "white")
+                hover_text2 = font.render(f"Countries Fossil Fuel Energy: {country.badInc*100}", True, "white")
 
                 screen.blit(hover_text, (10,680))
                 screen.blit(hover_text2, (10,700))
 
     # Render and display the score
-    goodText = font.render(f"Good Polution: {round(goodPol,2)}", True, "white")
-    badText = font.render(f"Bad Polution: {round(badPol,2)}", True, "white")
-    moneyText = font.render(f"Money : £{round(money,2)}", True, "white")
+    goodText = font.render(f"Green Energy: {round(goodPol,2)}", True, "white")
+    badText = font.render(f"Fossil Fuel Energy: {round(badPol,2)}", True, "white")
+    moneyText = font.render(f"Luca Bucks : ~{round(money,2)}", True, "white")
     
     screen.blit(goodText, (10, 10))
     screen.blit(badText, (10, 35))
