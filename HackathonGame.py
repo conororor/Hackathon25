@@ -58,9 +58,13 @@ def HelpMenu():
         # Customizable Instructions Text
         instructions_text = font.render("Extend your green energy plants by upgrading unrenwable-engery resourses", True, (0, 0, 0))
         instructions_text2 = font.render("Your ultimate goal is to reduce global CO₂ emissions and reach net-zero", True, (0, 0, 0))
+        instructions_text3 = font.render("Controls: Select countries, upgrade resources, and confirm policy choices.", True, (0, 0, 0))
+        instructions_text4 = font.render("Your ultimate goal is to reduce global CO₂ emissions and reach net-zero", True, (0, 0, 0))
         # Render instructions
         screen.blit(instructions_text, (200, 200))
         screen.blit(instructions_text2, (200, 250))
+        screen.blit(instructions_text3, (200, 300))
+        screen.blit(instructions_text4, (200, 350))
         # Back Button
         back_button = pygame.Rect(10, 10, 150, 50)  # Back button rectangle at the top-left corner
         pygame.draw.rect(screen, (0, 255, 0), back_button)  # Green button
