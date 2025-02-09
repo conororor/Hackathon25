@@ -1,5 +1,4 @@
 import pygame
-import math
 import random
 
 # Initialize pygame
@@ -24,7 +23,7 @@ def wrap_text(text, font, max_width):
     
     return lines
 
-def upgradeScreen(country_Multiplier):
+def upgradeScreen(money,country_Multiplier,GoodIncline,BadIncline):
     WIDTH, HEIGHT = 300, 300
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Upgrade Country")
@@ -39,11 +38,13 @@ def upgradeScreen(country_Multiplier):
     smallOption = "Plant 1 tree"
     bigOption = "Plant 5 trees"
     smallPercentChange = random.randint(10, 20)  # as a percentage
-    bigPercentChange = random.randint(40, 50)  # as a percentage
+    bigPercentChange = random.randint(30, 40)  # as a percentage
+    smallPercentChangeM = smallPercentChange / 100  # as a percentage
+    bigPercentChangeM = bigPercentChange / 100  # as a percentage
 
-    money = 1000.00
-    small_upgrade_cost = 10.00
-    big_upgrade_cost = 30.00
+
+    small_upgrade_cost = 100.00
+    big_upgrade_cost = 300.00
 
     back_button = pygame.Rect(10, 10, 70, 35)
     small_upgrade_button = pygame.Rect(15, 140, 130, 90)
@@ -122,18 +123,31 @@ def upgradeScreen(country_Multiplier):
                 running = False
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 mouse_pos = event.pos
+
+                if GoodIncline >= 2:
+                    GoodIncline = 2
+                    BadIncline = 0
+                    break                    
+                
                 
                 if back_button.collidepoint(mouse_pos):
-                    running = False
+                    print(money,GoodIncline,BadIncline)
+                    return money,GoodIncline,BadIncline
+                
                 elif small_upgrade_button.collidepoint(mouse_pos) and money >= small_upgrade_cost:
                     money = round(money - small_upgrade_cost, 2)
                     small_upgrade_cost = round(small_upgrade_cost * country_Multiplier, 2)
+                    GoodIncline = round(GoodIncline +  smallPercentChangeM,2)
+                    BadIncline = round(BadIncline -  smallPercentChangeM,2)
+
                 elif big_upgrade_button.collidepoint(mouse_pos) and money >= big_upgrade_cost:
                     money = round(money - big_upgrade_cost, 2)
                     big_upgrade_cost = round(big_upgrade_cost * country_Multiplier, 2)
+                    GoodIncline = round(GoodIncline + bigPercentChangeM,2)
+                    BadIncline = round(BadIncline - bigPercentChangeM,2)
         
         pygame.display.flip()
 
     pygame.quit()
 
-upgradeScreen(1.5)
+upgradeScreen(1000,1.5,1,1) # Example of how to call the function using 1000 money, cost multpiler of 1.5, and good and bad incline of 1
