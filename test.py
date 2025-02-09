@@ -4,103 +4,6 @@ import sys
 # Initialize Pygame
 pygame.init()
 
-# Screen resolution
-res = (1200, 750)
-screen = pygame.display.set_mode(res)
-pygame.display.set_caption("Game Menu")
-
-# Load the main menu image and hover images
-menu_image = pygame.image.load("images/MainMenuImage.png").convert()
-menu_image = pygame.transform.scale(menu_image, res)
-GameStart = pygame.image.load("images/GameStartHover.png").convert_alpha()
-Help = pygame.image.load("images/HelpHover.png").convert_alpha()
-Quit = pygame.image.load("images/QuitHover.png").convert_alpha()
-
-# Create button rectangles
-start_button = GameStart.get_rect(center=(600, 330))  # Centered at (600, 300)
-help_button = Help.get_rect(center=(600, 500))  # Below start
-quit_button = Quit.get_rect(center=(600, 660))  # Below help
-
-def StartMenu():
-    while True:
-        screen.blit(menu_image, (0, 0))
-        mouse_pos = pygame.mouse.get_pos()
-
-        # Check if mouse is hovering over buttons
-        start_hover = start_button.collidepoint(mouse_pos)
-        help_hover = help_button.collidepoint(mouse_pos)
-        quit_hover = quit_button.collidepoint(mouse_pos)
-
-        # Draw buttons only if hovering
-        if start_hover:
-            screen.blit(GameStart, start_button.topleft)
-        if help_hover:
-            screen.blit(Help, help_button.topleft)
-        if quit_hover:
-            screen.blit(Quit, quit_button.topleft)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if start_hover:
-                    print("Start Game")  # Replace with your game function
-                    return
-                if help_hover:
-                    print("Help Menu")  # Replace with a help screen function
-                    HelpMenu()
-                if quit_hover:
-                    pygame.quit()
-                    sys.exit()
-
-        pygame.display.update()
-
-def HelpMenu():
-    while True:
-        screen.fill((211, 211, 211))  # Light grey background
-
-        font = pygame.font.Font(None, 36)
-
-        # Title Text
-        title_text = font.render("Help Menu", True, (0, 0, 0))  # Black text
-        screen.blit(title_text, (500, 100))
-
-        # Customizable Instructions Text
-        instructions_text = font.render("This is your help screen.", True, (0, 0, 0))  # Black text
-        instructions_text2 = font.render("You can change this text to explain the game.", True, (0, 0, 0))
-        instructions_text3 = font.render("Click 'Back' to return to the main menu.", True, (0, 0, 0))
-
-        # Render instructions
-        screen.blit(instructions_text, (200, 200))
-        screen.blit(instructions_text2, (200, 250))
-        screen.blit(instructions_text3, (200, 300))
-
-        # Back Button
-        back_button = pygame.Rect(10, 10, 150, 50)  # Back button rectangle at the top-left corner
-        pygame.draw.rect(screen, (0, 255, 0), back_button)  # Green button
-        back_text = font.render("Back", True, (0, 0, 0))  # Black text
-        screen.blit(back_text, (40, 20))  # Positioning the text on the button
-
-        mouse_pos = pygame.mouse.get_pos()
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if back_button.collidepoint(mouse_pos):
-                    return  # Return to the main menu
-
-        pygame.display.update()
-
-# Start the menu
-StartMenu()
-
-
-
 class Country:
     def __init__(self,url,scale,pos,badInc,goodInc,cost):
         self.url = url
@@ -114,6 +17,10 @@ class Country:
         self.rect = self.image.get_rect(topleft=pos)
         self.opacity = 255
 
+# Screen resolution
+res = (1200, 750)
+screen = pygame.display.set_mode(res)
+
 badPol = 0
 worldPol = 0
 goodPol = 0
@@ -122,13 +29,14 @@ money = 100
 # Clock for frame rate control
 clock = pygame.time.Clock()
 
+
 # If Mouse is hovering over image
 mouse_hover = False
 opa = 255
 opacity = 255  # Full opacity (range: 0 to 255)
 
 greenland = Country("images/Greenland.png",(165,165),(315,2),0.01,0,50)
-iceland = Country("images/Iceland.png",(82,82),(460,90),0.01,0,50)
+iceland = Country("images/IceLand.png",(82,82),(460,90),0.01,0,50)
 greatBritan = Country("images/GreatBritan.png",(115,115),(420,168),0.01,0,50)
 alaska = Country("images/Alaska.png",(120,120),(5,62),0.01,0,50)
 northWestTerritory = Country("images/NorthWestTerritory.png",(210,100),(98,45),0.01,0,50)
@@ -142,9 +50,32 @@ venezuela = Country("images/Venezuela.png",(150,80),(210,387),0.01,0,50)
 brazil = Country("images/Brazil.png",(215,205),(233,410),0.01,0,50)
 peru = Country("images/Peru.png",(150,175),(195,410),0.01,0,50)
 argentina = Country("images/Argentina.png",(110,205),(252,530),0.01,0,50)
+indonesia = Country("images/Indonesia.png",(135,110),(922,495),0.01,0,50)
+newGuinea = Country("images/NewGuinea.png",(110,80),(1042,480),0.01,0,50)
+westernAustralia = Country("images/WesternAustralia.png",(150,145),(980,578),0.01,0,50)
+easternAustralia = Country("images/EasternAustralia.png",(128,169),(1067,568),0.01,0,50)
+madagascar = Country("images/Madagascar.png",(80,110),(725,610),0.01,0,50)
+japan = Country("images/Japan.png",(85,138),(1058,190),0.01,0,50)
+northAfrica = Country("images/NorthAfrica.png",(185,185),(464,375),0.01,0,50)
+egypt = Country("images/Egypt.png",(117,78),(587,397),0.01,0,50)
+congo = Country("images/Congo.png",(120,120),(580,504),0.01,0,50)
+eastAfrica = Country("images/EastAfrica.png",(140,185),(635,455),0.01,0,50)
+southAfrica = Country("images/SouthAfrica.png",(134,157),(590,575),0.01,0,50)
+westernEurope = Country("images/WesternEurope.png",(110,128),(450,265),0.01,0,50)
+southernEurope = Country("images/SouthernEurope.png",(113,120),(545,260),0.01,0,50)
+northernEurope = Country("images/NorthernEurope.png",(116,110),(532,187),0.01,0,50)
+scandonavia = Country("images/Scandonavia.png",(111,122),(550,79),0.01,0,50)
+middleEast = Country("images/MiddleEast.png",(195,175),(630,320),0.01,0,50)
+ukraine = Country("images/Ukraine.png",(185,250),(620,85),0.01,0,50)
+siam = Country("images/Siam.png",(100,120),(925,372),0.01,0,50)
+india = Country("images/India.png",(150,190),(800,314),0.01,0,50)
+afganistan = Country("images/Afganistan.png",(140,145),(733,200),0.01,0,50)
+
 
 countries = [greenland,iceland,greatBritan,alaska,northWestTerritory,alberta,quebec,ontario,westernUnitedStates,easternUnitedStates,
-             centralAmerica,venezuela,brazil,peru,argentina]
+             centralAmerica,venezuela,brazil,peru,argentina,indonesia,newGuinea,westernAustralia,easternAustralia,madagascar,
+             japan,northAfrica,egypt,congo,eastAfrica,southAfrica,westernEurope,southernEurope,northernEurope,scandonavia,middleEast,
+             ukraine,siam,india,afganistan]
 background = pygame.image.load("images/background.png").convert()
 background = pygame.transform.scale(background, res)
 
@@ -166,20 +97,20 @@ while True:
                     x, y = mouse_pos[0] - country.rect.x, mouse_pos[1] - country.rect.y
                     if country.image.get_at((x, y)).a > 0:
                         mouse_hover[country] = True
-                    else:
-                        country.opacity = 255
+                country.opacity = 255
                 
         if event.type == pygame.MOUSEBUTTONDOWN:
             # Check if click is within the image rectangle
             for country in countries:
                 if country.rect.collidepoint(mouse_pos):
+                    # Convert mouse coordinates relative to the image's top-left corner
                     x, y = mouse_pos[0] - country.rect.x, mouse_pos[1] - country.rect.y
 
                     # Get pixel color at (x, y) to check for transparency
-                    if country.image.get_at((x, y)).a > 0:
+                    if country.image.get_at((x, y)).a > 0:  # 'a' is the alpha channel
                         country.opacity = 170
                         country.goodInc += 0.01
-                        if country.badInc > 0:
+                        if country.badInc > 0:  
                             country.badInc -= 0.005
     
     screen.fill("lightblue")
@@ -189,10 +120,11 @@ while True:
     for country in countries:
         badPol += country.badInc
         goodPol += country.goodInc
-        country.opacity = 220 if mouse_hover[country] else country.opacity
+        country.opacity = 150 if mouse_hover[country] else country.opacity
         country.image.set_alpha(country.opacity)
         screen.blit(country.image,country.rect.topleft)
 
+    # Render and display the score
     font = pygame.font.Font(None, 36)
     goodText = font.render(f"Good Polution: {round(goodPol,2)}", True, "white")
     badText = font.render(f"Bad Polution: {round(badPol,2)}", True, "white")
@@ -201,5 +133,6 @@ while True:
     screen.blit(badText, (10, 35))
     screen.blit(moneyText, (10, 60))
 
+    # Update the display
     pygame.display.update()
     clock.tick(10)
