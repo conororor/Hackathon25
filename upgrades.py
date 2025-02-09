@@ -34,9 +34,12 @@ def upgradeScreen(money,country_Multiplier,GoodIncline,BadIncline):
     LIGHT_GRAY = (211, 211, 211)
     GREEN = (0, 255, 0)
 
-    Scenario = "You have the opportunity to plant trees in a forest. How many trees will you plant?"
-    smallOption = "Plant 1 tree"
-    bigOption = "Plant 5 trees"
+    ScenNum = random.randint(0, 1)
+    Scenarios = [["Glaciers are melting because fossil fuels are heating the planet.","Use less fuel, Reduce emissions.","Switch to clean, Renewable energy."],
+                 ["Cities rely too much on fossil fuels to generate electricity.","Use solar for a few buildings.","Switch a whole city to clean energy."]] 
+    Scenario = Scenarios[ScenNum][0]
+    smallOption = Scenarios[ScenNum][1]
+    bigOption = Scenarios[ScenNum][2]
     smallPercentChange = random.randint(10, 20)  # as a percentage
     bigPercentChange = random.randint(30, 40)  # as a percentage
     smallPercentChangeM = smallPercentChange / 100  # as a percentage
