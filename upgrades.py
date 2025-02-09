@@ -152,5 +152,3 @@ def upgradeScreen(money,country_Multiplier,GoodIncline,BadIncline):
         pygame.display.flip()
 
     pygame.quit()
-
-upgradeScreen(1000,1.5,1,1) # Example of how to call the function using 1000 money, cost multpiler of 1.5, and good and bad incline of 1

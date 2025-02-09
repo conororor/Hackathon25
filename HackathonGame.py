@@ -1,6 +1,7 @@
 import pygame
 import sys
 import numpy as np
+from upgrades import upgradeScreen
 
 # Initialize Pygame
 pygame.init()
@@ -40,7 +41,7 @@ screen = pygame.display.set_mode(res)
 badPol = 0
 worldPol = 0
 goodPol = 0
-money = 100
+money = 0
 
 # Clock for frame rate control
 clock = pygame.time.Clock()
@@ -51,6 +52,7 @@ mouse_hover = False
 opa = 255
 opacity = 255  # Full opacity (range: 0 to 255)
 
+#Values of Positive and negative carbon emissions taken from real world data
 greenland = Country("images/Greenland.png",(165,165),(315,2),0.1,0.9,50)
 iceland = Country("images/IceLand.png",(82,82),(460,90),0.1,0.9,50)
 greatBritan = Country("images/GreatBritan.png",(115,115),(420,168),0.6,0.4,50)
@@ -104,12 +106,13 @@ while True:
     mouse_hover = {country: False for country in countries}
     mouse_pos = pygame.mouse.get_pos()
     font = pygame.font.Font(None, 36)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
 
-        # Check for mouse click
+        # Check for mouse hover
         if event.type == pygame.MOUSEMOTION:
             for country in countries:
                 if country.rect.collidepoint(mouse_pos):
@@ -120,25 +123,46 @@ while True:
                         mouse_hover[country] = False
                 country.opacity = 255
                 
+        # Handle country clicks
         if event.type == pygame.MOUSEBUTTONDOWN:
-            # Check if click is within the image rectangle
             for country in countries:
                 if country.rect.collidepoint(mouse_pos):
-                    # Convert mouse coordinates relative to the image's top-left corner
                     x, y = mouse_pos[0] - country.rect.x, mouse_pos[1] - country.rect.y
 
-                    # Get pixel color at (x, y) to check for transparency
-                    if country.image.get_at((x, y)).a > 0:  # 'a' is the alpha channel
+                    if country.image.get_at((x, y)).a > 0:  # Ensure click is on visible part
                         country.opacity = 170
-                        country.goodInc += 0.01
-                        if country.badInc > 0:  
+
+                        # OPEN UPGRADE MENU
+                        new_money, new_goodInc, new_badInc = upgradeScreen(
+                            money, 1.5, country.goodInc, country.badInc
+                        )
+
+                        # APPLY THE UPGRADE EFFECTS
+                        if new_money is not None:
+                            money = new_money  # Update global money
+                        if new_goodInc is not None:
+                            country.goodInc = new_goodInc  # Apply new good pollution
+                        if new_badInc is not None:
+                            country.badInc = new_badInc  # Apply new bad pollution
+
+                        # Ensure pollution values remain within limits
+                        country.badInc = max(0, country.badInc)  # No negative pollution
+                        country.goodInc = min(2, country.goodInc)  # Capped at 2
+
+                        # EXISTING FUNCTIONALITY: Pollution improvement on click
+                        country.goodInc += 0.0002
+                        if country.badInc > 0:
                             country.badInc -= 0.05
-    
+
+                        res = (1200, 750)
+                        screen = pygame.display.set_mode(res)
+        
     screen.fill("lightblue")
-    background.set_alpha(125)
+    background.set_alpha()
     screen.blit(background, (0, 0))
     
     for country in countries:
+        money += country.goodInc*0.01
         badPol += country.badInc
         goodPol += country.goodInc
         country.adjust_green_intensity()
@@ -157,7 +181,7 @@ while True:
     # Render and display the score
     goodText = font.render(f"Good Polution: {round(goodPol,2)}", True, "white")
     badText = font.render(f"Bad Polution: {round(badPol,2)}", True, "white")
-    moneyText = font.render(f"Money: {round(money,2)}", True, "white")
+    moneyText = font.render(f"Money : £{round(money,2)}", True, "white")
     
     screen.blit(goodText, (10, 10))
     screen.blit(badText, (10, 35))
@@ -165,4 +189,4 @@ while True:
 
     # Update the display
     pygame.display.update()
-    clock.tick(10)
+    clock.tick(15)
