@@ -12,7 +12,7 @@ try:
 except Exception as e:
     print(e)
 
-regions = [
+regions =[
     "Alaska", "North West Territory", "Alberta", "Ontario", "Quebec",
     "Western US", "Eastern US", "Central US", "Venezuela", "Peru",
     "Brazil", "Argentina", "Iceland", "Great Britain", "Scandinavia",
@@ -44,6 +44,16 @@ gdp_multipliers = {
     "Afghanistan": "low", "Mongolia": "low", "Japan": "high", "Indonesia": "medium", "New Guinea": "low",
     "Western Australia": "medium", "Eastern Australia": "medium"
 }
+image = {
+    "Alaska": "Alask.png", "North West Territory": "NorthWestTerritory.png", "Alberta": "Alberta.png", "Ontario": "Ontario.png", "Quebec": "Quebec.png",
+    "Western US": "WesternUS.png", "Eastern US": "EasternUS.png", "Central US": "CentralUS.png", "Venezuela": "Venezuela.png", "Peru": "low",
+    "Brazil": "Brazil.png", "Argentina": "Argentina.png", "Iceland": "Iceland.png", "Great Britain": "GreatBritain.png", "Scandinavia": "medium",
+    "Ukraine": "Ukraine.png", "Northern Europe": "NorthernEurope.png", "Western Europe": "WesternEurope.png", "Southern Europe": "SouthernEurope.png",
+    "North Africa": "NorthAfrica.png", "Egypt": "Egypt.png", "East Africa": "EastAfrica.png", "Congo": "Congo.png", "South Africa": "SouthAfrica.png",
+    "Madagascar": "Madagascar.png", "Middle East": "MiddleEast.png", "India": "India.png", "South East Asia": "SouthEastAsia.png", "China": "China.png",
+    "Afghanistan": "Afghanistan.png", "Mongolia": "Mongolia.png", "Japan": "Japan.png", "Indonesia": "Indonesia.png", "New Guinea": "NewGuinea.png",
+    "Western Australia": "WesternAustralia.png", "Eastern Australia": "Eastern Australia.png"
+}
 
 
 
@@ -68,6 +78,7 @@ for region in regions:
         "gdp_multiplier": gdp_rating,
         "new_multiplier": new_multiplier,
         "start_cost": round(1000 * new_multiplier)  # Correctly calculate start cost
+        "image": image
     })
 
 collection.insert_many(data)
